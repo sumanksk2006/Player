@@ -88,9 +88,7 @@ extension ViewModel {
             default:
                 break
             }
-        }
-        
-        else if keyPath == #keyPath(AVPlayer.timeControlStatus) {
+        } else if keyPath == #keyPath(AVPlayer.timeControlStatus) {
             var status: AVPlayer.TimeControlStatus = .playing
             if let newStatus = change?[.newKey] as? Int {
                 status = AVPlayer.TimeControlStatus(rawValue: newStatus)!
