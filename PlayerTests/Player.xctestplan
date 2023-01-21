@@ -17,7 +17,13 @@
     }
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:Player.xcodeproj",
+        "identifier" : "708E1EF8297B1B6D002F213E",
+        "name" : "PlayerTests"
+      }
+    }
   ],
   "version" : 1
 }
