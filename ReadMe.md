@@ -1,5 +1,5 @@
 # Player in MVVM design pattern
--  All the player controls are handled in model
+-  Player controls (play/pause) are handled in model
 -  ViewController initiates view that hosts player
 -  View has dependency injection for viewModel
 -  ViewController initiate viewModel with dataModel object and then passes to view to add playerLayer
