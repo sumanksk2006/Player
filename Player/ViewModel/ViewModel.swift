@@ -8,12 +8,16 @@
 import Foundation
 import AVFoundation
 
+protocol Media {
+    var playerMediaStatus: MediaStatus? { get }
+    var mediaURL: String { get }
+}
+
 final class ViewModel : NSObject {
     private let model: DataModel
     private var player: AVPlayer? = nil
-    var logger: ConsoleLogger?
     private var playerItem: AVPlayerItem? = nil
-    
+    private var playerStatus: MediaStatus?
     init(_ model: DataModel) {
         self.model = model
         super.init()
@@ -23,7 +27,6 @@ final class ViewModel : NSObject {
         if let mediaURL = URL(string: model.urlString) {
             playerItem = AVPlayerItem(url: mediaURL)
             player = AVPlayer(playerItem: playerItem)
-            logger = ConsoleLogger(player!)
             addObservers()
         }
     }
@@ -49,12 +52,13 @@ final class ViewModel : NSObject {
 // MARK: AVPlayer controls
 extension ViewModel {
     func playMedia() {
+        if playerStatus == nil {
+            playerStatus = MediaStatus(self)
+        }
         player?.play()
-        logger?.logCurrentStatus(.play)
     }
     
     private func pauseMedia() {
-        logger?.logCurrentStatus(.pause)
         player?.pause()
     }
     
@@ -69,7 +73,7 @@ extension ViewModel {
     }
     
     func playerEndsMedia() {
-        logger?.logCurrentStatus(.end)
+        playerStatus?.status = .end
     }
 }
 
@@ -94,11 +98,35 @@ extension ViewModel {
                 status = AVPlayer.TimeControlStatus(rawValue: newStatus)!
             }
             
-            if status != .playing {
-                logger?.endStatusLogger()
-            } else {
-                logger?.startStatusLogger()
+            switch status {
+            case .paused:
+                playerStatus?.status = .pause
+            case .playing:
+                playerStatus?.status = .play
+            default:
+                break
             }
         }
+    }
+}
+
+extension ViewModel: Media {
+    var playerMediaStatus: MediaStatus? {
+        self.playerStatus
+    }
+    
+    var mediaURL: String {
+        model.urlString
+    }
+}
+
+extension ViewModel: MediaStatusDelegate {
+    func getCurrentMediaStatus() -> PlayerPosition {
+        if let media = player?.currentItem, !CMTimeGetSeconds(media.duration).isNaN  {
+            let totalDuration = String(format: "%.1f", CMTimeGetSeconds(media.duration))
+            let current =  String(format: "%.1f", CMTimeGetSeconds(media.currentTime()))
+            return (totalDuration, current)
+        }
+        return (nil,"0.0")
     }
 }

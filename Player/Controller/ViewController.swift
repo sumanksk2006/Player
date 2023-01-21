@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController  {
     
     
-    let viewModel = ViewModel(DataModel())
+    let viewModel = ViewModel(DataModel(urlString: Constants.mediaLink))
     
     lazy var playButton: UIButton = {
         let button:UIButton = UIButton(type: .custom)

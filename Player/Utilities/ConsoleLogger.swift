@@ -6,21 +6,21 @@
 //
 
 import Foundation
-import AVFoundation
 
 enum PlayerStatus{
     case play
     case pause
     case end
+    case unknown
 }
+typealias PlayerPosition = (duration: String?, current: String)
 
 final class ConsoleLogger {
-    let player: AVPlayer
+    let mediaStatus: MediaStatusDelegate
     var statusTimer: Timer?
     var currentLog: String = ""
-    typealias PlayerPosition = (duration: String?, current: String)
-    init(_ player: AVPlayer) {
-        self.player = player
+    init(_ mediaStatus: MediaStatusDelegate) {
+        self.mediaStatus = mediaStatus
     }
     
     func startStatusLogger() {
@@ -40,47 +40,44 @@ final class ConsoleLogger {
     }
     
     @objc func logCurrentPlayStatus() {
-        if let position = getCurrentPosition(), let total = position.duration {
-            currentLog = "Player is at \(position.current) of \(total) Seconds"
+        let currentPosition = mediaStatus.getCurrentMediaStatus()
+        if let total = currentPosition.duration {
+            currentLog = String(format: Constants.timerLogText, currentPosition.current, total)
             print(Constants.logIdentifier, currentLog )
         }
     }
     
-    private func getCurrentPosition() -> PlayerPosition? {
-        if let currentMedia = player.currentItem, !CMTimeGetSeconds(currentMedia.duration).isNaN  {
-            let totalDuration = String(format: "%.1f", CMTimeGetSeconds(currentMedia.duration))
-            let current =  String(format: "%.1f", CMTimeGetSeconds(currentMedia.currentTime()))
-            return (totalDuration, current)
-        }
-        return (nil,"0.0")
-    }
     
     private func logPlayerPlay() {
-        if let currentPosition = getCurrentPosition() {
-            let status = (currentPosition.current == "0.0" ? "Starts" : "Resumed")
-            currentLog = "Player \(status) Playing from \(currentPosition.current) sec position"
-            print(Constants.logIdentifier, currentLog)
-        }
+        let currentPosition = mediaStatus.getCurrentMediaStatus()
+        let status = (currentPosition.current == "0.0" ? Constants.playerStartStatus : Constants.playerResumeStatus)
+        currentLog = String(format: Constants.playLogText, status, currentPosition.current)
+        print(Constants.logIdentifier, currentLog)
     }
     
     private func logPlayerPause() {
-        currentLog = "Player Paused"
+        currentLog = Constants.pauseLogText
         print(Constants.logIdentifier, currentLog)
     }
     
     private func logPlayerEndMedia() {
-        currentLog = "Player Finished Playing"
-        print(Constants.logIdentifier, "Player Finished Playing")
+        currentLog = Constants.finishLogText
+        print(Constants.logIdentifier, currentLog)
     }
     
     func logCurrentStatus(_ status: PlayerStatus) {
         switch status {
         case .play:
             logPlayerPlay()
+            startStatusLogger()
         case .pause:
             logPlayerPause()
+            endStatusLogger()
         case .end:
             logPlayerEndMedia()
+            endStatusLogger()
+        default:
+            break
         }
     }
     

@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct DataModel {
-    let urlString = Constants.mediaLink
+struct DataModel: Decodable {
+    let urlString: String
 }
