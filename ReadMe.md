@@ -1,7 +1,7 @@
 # Player in MVVM design pattern
--  Player controls (play/pause) are handled in model
--  ViewController initiates view that hosts player
+
 -  Dependency Injection for ViewModel and View
+-  Player controls (play/pause) are handled in viewModel
 -  ViewController initiates viewModel with dataModel object and then passes to view's initializer to configure player
 -  Player will start playing Media on launch once playerItem's status changed to .readyToPlay.
 -  Created button to pause and play media
