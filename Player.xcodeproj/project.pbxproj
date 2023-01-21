@@ -21,6 +21,7 @@
 		708E1F1F297B25F6002F213E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E1F1E297B25F6002F213E /* PlayerView.swift */; };
 		708E1F22297B51A7002F213E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E1F21297B51A7002F213E /* Constants.swift */; };
 		708E1F25297B5F3F002F213E /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E1F24297B5F3F002F213E /* ConsoleLogger.swift */; };
+		70FD489A297B8E240035B005 /* Player.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 70FD4899297B8E240035B005 /* Player.xctestplan */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		708E1F21297B51A7002F213E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		708E1F24297B5F3F002F213E /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
 		708E1F26297B807D002F213E /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		70FD4899297B8E240035B005 /* Player.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Player.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				708E1EFD297B1B6D002F213E /* PlayerViewModelTests.swift */,
+				70FD4899297B8E240035B005 /* Player.xctestplan */,
 			);
 			path = PlayerTests;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70FD489A297B8E240035B005 /* Player.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
