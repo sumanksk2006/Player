@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "9D703ED8-544D-4E92-97C8-B6D04A0434BE",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Player.xcodeproj",
+      "identifier" : "708E1EE2297B1B6D002F213E",
+      "name" : "Player"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
